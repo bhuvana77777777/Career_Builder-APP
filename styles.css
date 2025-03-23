@@ -1,0 +1,534 @@
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+/* Heading */
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Motivational Quote */
+.quote {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin-bottom: 30px;
+  opacity: 0.8;
+  animation: fadeIn 3s ease-in-out;
+}
+
+/* Button */
+button {
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  color: #fff;
+  padding: 14px 28px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  font-weight: bold;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+/* Flying Icons */
+.flying-icon {
+  position: absolute;
+  width: 50px;
+  opacity: 0.8;
+  animation: flyAnimation 5s infinite linear;
+}
+
+/* Animations */
+@keyframes flyAnimation {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Positioning Flying Icons */
+.icon1 { top: 10%; left: 20%; }
+.icon2 { top: 50%; right: 10%; }
+.icon3 { bottom: 10%; left: 30%; }
+.icon4 { bottom: 30%; right: 40%; }
+/* Centering the login box */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #000; /* Black background */
+}
+
+/* Login Box */
+.login-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.login-box:hover {
+  transform: scale(1.05);
+}
+
+/* Headings */
+h2 {
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+/* Input Fields */
+.input-group {
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Login Button */
+.login-btn {
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+  background: linear-gradient(45deg, #1e90ff, #ff00ff);
+  transform: scale(1.1);
+}
+
+/* Links */
+.links p {
+  margin-top: 15px;
+}
+
+.links a {
+  color: #1e90ff;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.links a:hover {
+  color: #ff00ff;
+}
+/* Signup Page Styling */
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #000; /* Black background */
+}
+
+/* Signup Box */
+.signup-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.signup-box:hover {
+  transform: scale(1.05);
+}
+
+/* Headings */
+h2 {
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+/* Input Fields */
+.input-group {
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Sign Up Button */
+.signup-btn {
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.signup-btn:hover {
+  background: linear-gradient(45deg, #1e90ff, #ff00ff);
+  transform: scale(1.1);
+}
+
+/* Links */
+.links p {
+  margin-top: 15px;
+}
+
+.links a {
+  color: #1e90ff;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.links a:hover {
+  color: #ff00ff;
+}
+/* Dashboard Styling */
+.dashboard-container {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 2rem;
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Logout Button */
+#logoutBtn {
+  background: linear-gradient(45deg, #ff00ff, #1e90ff);
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#logoutBtn:hover {
+  background: linear-gradient(45deg, #1e90ff, #ff00ff);
+  transform: scale(1.1);
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
+}
+
+/* Dashboard Items */
+.dashboard-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.dashboard-item:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Dashboard Icons */
+.dashboard-item img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+/* Suggestions Page */
+.suggestions-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px;
+}
+
+.suggestions-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.suggestions-container li {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+/* Path Page */
+.path-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px;
+}
+
+/* Abroad Page */
+.abroad-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px;
+}
+
+.abroad-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.abroad-container li {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+/* Assessment Page */
+.assessment-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px;
+}
+
+.assessment-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.assessment-container select, .assessment-container button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Update Skills Page */
+.update-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px;
+}
+
+.update-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.update-container input, .update-container button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+#logoutBtn {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#logoutBtn:hover {
+    background: #ff6b81;
+}
+
+.test-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #1e90ff;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1rem;
+}
+
+.input-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+button[type="submit"] {
+    background: linear-gradient(45deg, #ff00ff, #1e90ff);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(45deg, #1e90ff, #ff00ff);
+}
+
+.hidden {
+    display: none;
+}
+
+#recommendation {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#userName {
+    color: #1e90ff;
+    font-weight: bold;
+}

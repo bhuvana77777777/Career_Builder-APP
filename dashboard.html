@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Career Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <body>
+        <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+        <script src="https://files.bpcontent.cloud/2024/12/24/15/20241224153710-GU4UYT3Y.js"></script>
+      </body>
+      
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Welcome to Career Builder</h1>
+            <button id="logoutBtn" onclick="logout()">Logout</button>
+        </header>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-item" onclick="navigateTo('career-path.html')">
+                <img src="pic/image-removebg-preview (1).png" alt="Career Suggestions">
+                <h3>Enter your dream job and get a road map!</h3>
+            </div>
+            <div class="dashboard-item" onclick="navigateTo('career-suggestions.html')">
+                <img src="pic/image-removebg-preview (3).png" alt="Career Path">
+                <h3>Know what you could get from your Skills!</h3>
+            </div>
+            <div class="dashboard-item" onclick="navigateTo('study-abroad.html')">
+                <img src="pic/image-removebg-preview (2).png" alt="Study Abroad">
+                <h3>Want to Study abroad?</h3>
+            </div>
+        </div>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="firebase-auth.js"></script>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+
+        document.getElementById("logoutBtn").addEventListener("click", function() {
+            firebase.auth().signOut().then(() => {
+                alert("Logged out successfully!");
+                window.location.href = "login.html";
+            }).catch((error) => {
+                alert(error.message);
+            });
+        });
+
+         // Logout Button
+   document.getElementById("logoutBtn").addEventListener("click", () => {
+            window.location.href = "index.html";})
+    </script>
+</body>
+</html>

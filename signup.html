@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Career Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="signup-wrapper">
+        <div class="signup-box">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="input-group">
+                    <input type="text" id="fullName" placeholder="Full Name" required autocomplete="name">
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required autocomplete="new-password">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+            <div class="links">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { signUp } from "./firebase-auth.js";
+
+        document.getElementById("signupForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            signUp(email, password);
+        });
+    </script>
+</body>
+</html>

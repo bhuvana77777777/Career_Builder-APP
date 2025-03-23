@@ -1,0 +1,112 @@
+/* styles.css */
+body {
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#logoutBtn {
+    padding: 10px 20px;
+    background-color: #ff4b4b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#logoutBtn:hover {
+    background-color: #ff1c1c;
+}
+
+.skills-input-container {
+    margin-bottom: 20px;
+}
+
+#skillsForm {
+    display: flex;
+    gap: 10px;
+}
+
+#skillsInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #444; /* Darker border for contrast */
+    border-radius: 5px;
+    background-color: #222; /* Dark input background */
+    color: #fff; /* White text */
+    font-size: 16px;
+}
+
+#skillsInput::placeholder {
+    color: #888; /* Light gray placeholder text */
+}
+
+#skillsForm button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#skillsForm button:hover {
+    background-color: #45a049;
+}
+
+.suggestions-container {
+    background-color: #111; /* Darker background for contrast */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#careerList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#careerList li {
+    background-color: #222; /* Dark list item background */
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#careerList li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#careerList h3 {
+    margin-top: 0;
+    color: #4CAF50; /* Green accent for headings */
+}
+
+#careerList p {
+    margin: 5px 0;
+    color: #ddd; /* Light gray text for paragraphs */
+}
+
+#careerList strong {
+    color: #fff; /* White text for strong elements */
+}

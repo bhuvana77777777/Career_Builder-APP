@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <body>
+        <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+        <script src="https://files.bpcontent.cloud/2024/12/24/15/20241224153710-GU4UYT3Y.js"></script>
+      </body>
+      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Path - Career Builder</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+#logoutBtn {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#logoutBtn:hover {
+    background: #ff6b81;
+}
+
+.path-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#jobRoleSelect, #experienceLevel {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#jobRoleSelect:hover, #experienceLevel:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#jobRoleSelect option, #experienceLevel option {
+    background: black;
+    color: white;
+}
+
+#careerPath {
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center; /* Center the timeline horizontally */
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px; /* Limit the width of the timeline */
+    width: 100%; /* Ensure it takes full width up to max-width */
+    margin: 0 auto; /* Center the timeline */
+}
+
+.timeline::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    background: #1e90ff;
+    top: 0;
+    bottom: 0;
+    left: 50%; /* Center the timeline line */
+    margin-left: -1px;
+}
+
+.step {
+    padding: 20px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    width: 45%; /* Adjust width to fit within the timeline */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.step:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.step img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step h3 {
+    color: #1e90ff;
+    margin: 0 0 10px 0;
+}
+
+.step p {
+    margin: 0;
+}
+
+.step.left {
+    left: 0;
+    text-align: left;
+}
+
+.step.right {
+    left: 55%; /* Adjust positioning for right-aligned steps */
+    text-align: right;
+}
+
+.step.left::before, .step.right::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #1e90ff;
+    top: 20px;
+    z-index: 1;
+}
+
+.step.left::before {
+    left: -10px;
+}
+
+.step.right::before {
+    right: -10px;
+}
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Know how and where to start :)</h1>
+            <button id="logoutBtn" onclick="logout()">Logout</button>
+        </header>
+
+        <div class="path-container">
+            <h2>Choose a Job role to get an idea!</h2>
+            <select id="jobRoleSelect">
+                <option value="">Select a Job Role</option>
+<option value="Software Developer">Software Developer</option>
+<option value="Data Scientist">Data Scientist</option>
+<option value="Web Developer">Web Developer</option>
+<option value="Machine Learning Engineer">Machine Learning Engineer</option>
+<option value="Cloud Engineer">Cloud Engineer</option>
+<option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+<option value="UI/UX Designer">UI/UX Designer</option>
+<option value="Product Manager">Product Manager</option>
+<option value="DevOps Engineer">DevOps Engineer</option>
+<option value="Mobile App Developer">Mobile App Developer</option>
+<option value="Game Developer">Game Developer</option>
+<option value="Blockchain Developer">Blockchain Developer</option>
+<option value="AI Engineer">AI Engineer</option>
+<option value="Full-Stack Developer">Full-Stack Developer</option>
+<option value="Database Administrator">Database Administrator</option>
+<option value="Network Engineer">Network Engineer</option>
+<option value="Embedded Systems Engineer">Embedded Systems Engineer</option>
+<option value="AR/VR Developer">AR/VR Developer</option>
+<option value="Quantum Computing Engineer">Quantum Computing Engineer</option>
+            </select>
+            <select id="experienceLevel">
+                <option value="">Select Your Experience Level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Advanced">Advanced</option>
+            </select>
+            <div id="careerPath">
+                <!-- Career path steps will be dynamically populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+ const careerPathMap = {
+    "Software Developer": {
+        Beginner: [
+            { title: "Learn Programming Basics", description: "Start with Python or JavaScript.", image: "pic/pyjs.jpg" },
+            { title: "Build Simple Projects", description: "Create a calculator or to-do list app.", image: "pic/pro.jpg" },
+            { title: "Apply for Internships", description: "Look for internships to gain experience.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Advanced Concepts", description: "Study data structures and algorithms.", image: "pic/dsa.png" },
+            { title: "Build Complex Projects", description: "Create a full-stack web application.", image: "pic/fs.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior developer positions.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master a Framework", description: "Learn React, Angular, or Django.", image: "pic/rjd.png" },
+            { title: "Contribute to Open Source", description: "Contribute to projects on GitHub.", image: "pic/git.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior developer positions.", image: "pic/app.png" }
+        ]
+    },
+    "Data Scientist": {
+        Beginner: [
+            { title: "Learn Python and Statistics", description: "Start with Python and basic statistics.", image: "pic/st.jpeg" },
+            { title: "Learn Data Analysis", description: "Study libraries like Pandas and NumPy.", image: "pic/pro.jpg" },
+            { title: "Apply for Internships", description: "Look for data science internships.", image: "pic/int1.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Machine Learning", description: "Study ML algorithms and frameworks.", image: "pic/ml.jpeg" },
+            { title: "Work on Real-World Projects", description: "Build projects using real datasets.", image: "pic/pro.jpg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior data scientist roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Deep Learning", description: "Study neural networks and TensorFlow.", image: "pic/neu.jpeg" },
+            { title: "Publish Research Papers", description: "Contribute to the data science community.", image: "pic/dt.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior data scientist roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Web Developer": {
+        Beginner: [
+            { title: "Learn HTML, CSS, and JavaScript", description: "Master the basics of web development.", image: "pic/html.jpeg" },
+            { title: "Build Simple Websites", description: "Create personal or portfolio websites.", image: "pic/web.jpeg" },
+            { title: "Apply for Internships", description: "Look for web development internships.", image: "pic/int1.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn a Frontend Framework", description: "Learn React, Angular, or Vue.js.", image: "pic/vue.jpeg" },
+            { title: "Build Full-Stack Projects", description: "Create projects with backend integration.", image: "pic/web.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior web developer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Backend Development", description: "Learn Node.js, Django, or Flask.", image: "pic/node.png" },
+            { title: "Optimize Web Performance", description: "Learn about caching, CDNs, and SEO.", image: "pic/seo.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior web developer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Machine Learning Engineer": {
+        Beginner: [
+            { title: "Learn Python and Math", description: "Start with Python and linear algebra.", image: "pic/la.jpeg" },
+            { title: "Learn ML Basics", description: "Study supervised and unsupervised learning.", image: "pic/sml.jpeg" },
+            { title: "Apply for Internships", description: "Look for ML internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Deep Learning", description: "Study neural networks and TensorFlow.", image: "pic/neu.jpeg" },
+            { title: "Work on Real-World Projects", description: "Build projects using real datasets.", image: "pic/pro.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior ML engineer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Advanced ML Techniques", description: "Learn reinforcement learning and NLP.", image: "pic/nlp.jpeg" },
+            { title: "Publish Research Papers", description: "Contribute to the ML community.", image: "pic/sml.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior ML engineer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Cloud Engineer": {
+        Beginner: [
+            { title: "Learn Cloud Basics", description: "Start with AWS, Azure, or Google Cloud.", image: "pic/cloud.jpeg" },
+            { title: "Learn Networking", description: "Understand networking concepts.", image: "pic/net.png" },
+            { title: "Apply for Internships", description: "Look for cloud engineering internships.", image: "pic/int1.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn DevOps Tools", description: "Study Docker, Kubernetes, and Terraform.", image: "pic/docker.jpeg" },
+            { title: "Build Cloud Projects", description: "Deploy applications on the cloud.", image: "pic/cloud.jpeg"},
+            { title: "Apply for Junior Roles", description: "Apply for junior cloud engineer roles.", image: "pic/apply.png"},
+        ],
+        Advanced: [
+            { title: "Master Cloud Security", description: "Learn about cloud security best practices.", image: "pic/cloud.jpeg" },
+            { title: "Get Certified", description: "Obtain certifications like AWS Certified Solutions Architect.", image: "pic/net.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior cloud engineer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Cybersecurity Analyst": {
+        Beginner: [
+            { title: "Learn Networking Basics", description: "Understand how networks operate.", image: "pic/net.png" },
+            { title: "Study Cybersecurity Fundamentals", description: "Learn about encryption and firewalls.", image: "pic/fw.png" },
+            { title: "Apply for Internships", description: "Look for cybersecurity internships.", image: "pic/int1.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Penetration Testing", description: "Study ethical hacking techniques.", image: "pic/hack.jpeg" },
+            { title: "Work on Security Projects", description: "Build projects like vulnerability scanners.", image: "pic/prohack.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior cybersecurity roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Advanced Security Concepts", description: "Learn about zero-trust architecture.", image: "pic/zero.jpeg" },
+            { title: "Get Certified", description: "Obtain certifications like CISSP or CEH.", image: "pic/net.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior cybersecurity roles.", image: "pic/ap.png" }
+        ]
+    },
+    "UI/UX Designer": {
+        Beginner: [
+            { title: "Learn Design Principles", description: "Understand the basics of design and user experience.", image: "pic/ui.png" },
+            { title: "Learn Design Tools", description: "Master tools like Figma, Sketch, or Adobe XD.", image: "pic/figma.jpeg" },
+            { title: "Apply for Internships", description: "Look for UI/UX design internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Build a Portfolio", description: "Create a portfolio of design projects.", image: "pic/web.jpeg" },
+            { title: "Learn Prototyping", description: "Create interactive prototypes for apps.", image: "pic/figma.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior UI/UX designer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master User Research", description: "Conduct user research and usability testing.", image: "pic/soft.jpeg" },
+            { title: "Work on Complex Projects", description: "Design for large-scale applications.", image: "pic/git.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior UI/UX designer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Product Manager": {
+        Beginner: [
+            { title: "Learn Product Management Basics", description: "Understand the product lifecycle.", image: "pic/agile.png" },
+            { title: "Learn Agile Methodologies", description: "Study Scrum and Kanban.", image: "pic/scrum.jpeg" },
+            { title: "Apply for Internships", description: "Look for product management internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Build a Product Roadmap", description: "Create a roadmap for a product.", image: "pic/road.jpeg" },
+            { title: "Work on Cross-Functional Teams", description: "Collaborate with developers and designers.", image: "pic/git.png" },
+            { title: "Apply for Junior Roles", description: "Apply for junior product manager roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Stakeholder Management", description: "Learn to manage stakeholders effectively.", image: "pic/stake.jpeg" },
+            { title: "Launch a Product", description: "Lead the launch of a new product.", image: "pic/road.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior product manager roles.", image: "pic/ap.png" }
+        ]
+    },
+    "DevOps Engineer": {
+        Beginner: [
+            { title: "Learn Linux and Scripting", description: "Master Linux and Bash scripting.", image: "pic/linux.jpeg" },
+            { title: "Learn CI/CD Basics", description: "Study Jenkins and GitLab CI.", image: "pic/git.png" },
+            { title: "Apply for Internships", description: "Look for DevOps internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Containerization", description: "Study Docker and Kubernetes.", image: "pic/docker.jpeg" },
+            { title: "Build CI/CD Pipelines", description: "Create pipelines for automated deployments.", image: "pic/pl.png" },
+            { title: "Apply for Junior Roles", description: "Apply for junior DevOps roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Cloud Infrastructure", description: "Learn about cloud platforms like AWS and Azure.", image: "pic/cloud.jpeg" },
+            { title: "Get Certified", description: "Obtain certifications like AWS Certified DevOps Engineer.", image: "pic/pl.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior DevOps roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Mobile App Developer": {
+        Beginner: [
+            { title: "Learn Mobile Development Basics", description: "Start with Flutter, React Native, or Swift.", image: "pic/flutter.jpeg" },
+            { title: "Build Simple Apps", description: "Create apps like a calculator or to-do list.", image: "pic/web.jpeg" },
+            { title: "Apply for Internships", description: "Look for mobile app development internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Advanced Concepts", description: "Study state management and APIs.", image: "pic/api.png" },
+            { title: "Build Complex Apps", description: "Create apps with backend integration.", image: "pic/web.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior mobile app developer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Cross-Platform Development", description: "Learn to build apps for both iOS and Android.", image: "pic/apple.png" },
+            { title: "Publish Apps on App Stores", description: "Publish your apps on Google Play and App Store.", image: "pic/play.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior mobile app developer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Game Developer": {
+        Beginner: [
+            { title: "Learn Game Development Basics", description: "Start with Unity or Unreal Engine.", image: "pic/game.jpeg" },
+            { title: "Build Simple Games", description: "Create games like Pong or Flappy Bird.", image: "pic/games.jpeg" },
+            { title: "Apply for Internships", description: "Look for game development internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Advanced Game Mechanics", description: "Study physics, AI, and multiplayer systems.", image: "pic/games.jpeg" },
+            { title: "Build Complex Games", description: "Create games with advanced mechanics.", image: "pic/game.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior game developer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Game Optimization", description: "Learn to optimize games for performance.", image: "pic/go.png" },
+            { title: "Publish Games on Platforms", description: "Publish your games on Steam or App Stores.", image: "pic/play.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior game developer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Blockchain Developer": {
+        Beginner: [
+            { title: "Learn Blockchain Basics", description: "Understand blockchain technology and cryptocurrencies.", image: "pic/bc.jpeg" },
+            { title: "Learn Smart Contracts", description: "Study Solidity and Ethereum.", image: "pic/eth.jpeg" },
+            { title: "Apply for Internships", description: "Look for blockchain development internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Build Decentralized Apps (DApps)", description: "Create DApps using Ethereum or other platforms.", image: "pic/dapp.jpeg" },
+            { title: "Learn Consensus Algorithms", description: "Study PoW, PoS, and other consensus mechanisms.", image: "pic/ml.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior blockchain developer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Blockchain Security", description: "Learn about securing blockchain networks.", image: "pic/bs.jpeg" },
+            { title: "Contribute to Open Source", description: "Contribute to blockchain projects on GitHub.", image: "pic/git.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior blockchain developer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "AI Engineer": {
+        Beginner: [
+            { title: "Learn AI Basics", description: "Understand the fundamentals of artificial intelligence.", image: "pic/" },
+            { title: "Learn Python and Libraries", description: "Study libraries like TensorFlow and PyTorch.", image: "pic/" },
+            { title: "Apply for Internships", description: "Look for AI engineering internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Machine Learning", description: "Study supervised and unsupervised learning.", image: "pic/sml.jpeg" },
+            { title: "Work on AI Projects", description: "Build projects like chatbots or recommendation systems.", image: "pic/ml.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior AI engineer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Deep Learning", description: "Study neural networks and advanced AI techniques.", image: "pic/neu.jpeg" },
+            { title: "Publish Research Papers", description: "Contribute to AI research and publications.", image: "pic/research.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior AI engineer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Full-Stack Developer": {
+        Beginner: [
+            { title: "Learn Frontend Basics", description: "Start with HTML, CSS, and JavaScript.", image: "pic/html.jpeg" },
+            { title: "Learn Backend Basics", description: "Study Node.js, Express, or Django.", image: "pic/node.png" },
+            { title: "Apply for Internships", description: "Look for full-stack development internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Frontend Frameworks", description: "Study React, Angular, or Vue.js.", image: "pic/vue.jpeg" },
+            { title: "Build Full-Stack Projects", description: "Create projects with frontend and backend integration.", image: "pic/pro.png" },
+            { title: "Apply for Junior Roles", description: "Apply for junior full-stack developer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Database Management", description: "Learn SQL, MongoDB, and database optimization.", image: "pic/db.jpeg" },
+            { title: "Optimize Web Performance", description: "Learn about caching, CDNs, and SEO.", image: "pic/seo.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior full-stack developer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Database Administrator": {
+        Beginner: [
+            { title: "Learn Database Basics", description: "Understand relational databases and SQL.", image: "pic/db.jpeg" },
+            { title: "Learn Database Tools", description: "Study MySQL, PostgreSQL, or MongoDB.", image: "pic/sql.png" },
+            { title: "Apply for Internships", description: "Look for database administration internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Database Optimization", description: "Study indexing, query optimization, and normalization.", image: "pic/dbo.png" },
+            { title: "Work on Real-World Projects", description: "Manage databases for small-scale applications.", image: "pic/pro.png" },
+            { title: "Apply for Junior Roles", description: "Apply for junior database administrator roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Database Security", description: "Learn about securing databases and backups.", image: "pic/dbs.jpeg" },
+            { title: "Get Certified", description: "Obtain certifications like Oracle Certified Professional.", image: "pic/db.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior database administrator roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Network Engineer": {
+        Beginner: [
+            { title: "Learn Networking Basics", description: "Understand TCP/IP, DNS, and routing.", image: "pic/net.png" },
+            { title: "Learn Network Tools", description: "Study tools like Wireshark and Cisco Packet Tracer.", image: "pic/ws.png" },
+            { title: "Apply for Internships", description: "Look for network engineering internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Advanced Networking", description: "Study VLANs, VPNs, and network security.", image: "pic/cisco.png" },
+            { title: "Work on Network Projects", description: "Set up and manage small-scale networks.", image: "pic/net.png" },
+            { title: "Apply for Junior Roles", description: "Apply for junior network engineer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Network Security", description: "Learn about firewalls, IDS, and penetration testing.", image: "pic/net.png" },
+            { title: "Get Certified", description: "Obtain certifications like CCNA or CCNP.", image: "pic/cisco.png" },
+            { title: "Apply for Senior Roles", description: "Apply for senior network engineer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Embedded Systems Engineer": {
+        Beginner: [
+            { title: "Learn Embedded Systems Basics", description: "Understand microcontrollers and C programming.", image: "pic/emb.jpeg" },
+            { title: "Learn Hardware Interfacing", description: "Study sensors, actuators, and communication protocols.", image: "pic/sensors.jpeg" },
+            { title: "Apply for Internships", description: "Look for embedded systems internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Real-Time Operating Systems", description: "Study RTOS and task scheduling.", image: "pic/rtos.png" },
+            { title: "Work on Embedded Projects", description: "Build projects like IoT devices or robotics.", image: "pic/emb.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior embedded systems engineer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Embedded Security", description: "Learn about securing embedded systems.", image: "pic/sensors.jpeg" },
+            { title: "Work on Complex Systems", description: "Develop systems for automotive or aerospace industries.", image: "pic/emb.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior embedded systems engineer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "AR/VR Developer": {
+        Beginner: [
+            { title: "Learn AR/VR Basics", description: "Understand AR/VR concepts and tools.", image: "pic/ar.jpeg" },
+            { title: "Learn Unity or Unreal Engine", description: "Study game engines for AR/VR development.", image: "pic/unity.png" },
+            { title: "Apply for Internships", description: "Look for AR/VR development internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Build AR/VR Projects", description: "Create immersive experiences and applications.", image: "pic/vr.jpeg" },
+            { title: "Learn 3D Modeling", description: "Study tools like Blender or Maya for 3D assets.", image: "pic/blender.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior AR/VR developer roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master AR/VR Optimization", description: "Learn to optimize AR/VR applications for performance.", image: "pic/vr.jpeg" },
+            { title: "Publish AR/VR Apps", description: "Publish your apps on platforms like Oculus or SteamVR.", image: "pic/oculus.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior AR/VR developer roles.", image: "pic/ap.png" }
+        ]
+    },
+    "Quantum Computing Engineer": {
+        Beginner: [
+            { title: "Learn Quantum Computing Basics", description: "Understand qubits, superposition, and entanglement.", image: "pic/qc.jpeg" },
+            { title: "Learn Qiskit or Cirq", description: "Study quantum programming frameworks.", image: "pic/q.jpeg" },
+            { title: "Apply for Internships", description: "Look for quantum computing internships.", image: "pic/int.jpg" }
+        ],
+        Moderate: [
+            { title: "Learn Quantum Algorithms", description: "Study algorithms like Shor's and Grover's.", image: "pic/shor.png" },
+            { title: "Work on Quantum Projects", description: "Build projects using quantum simulators.", image: "pic/qs.jpeg" },
+            { title: "Apply for Junior Roles", description: "Apply for junior quantum computing roles.", image: "pic/apply.png" }
+        ],
+        Advanced: [
+            { title: "Master Quantum Error Correction", description: "Learn about error correction in quantum systems.", image: "pic/eqc.jpeg" },
+            { title: "Contribute to Quantum Research", description: "Publish papers or contribute to open-source projects.", image: "pic/q.jpeg" },
+            { title: "Apply for Senior Roles", description: "Apply for senior quantum computing roles.", image: "pic/ap.png" }
+        ]
+    }
+
+};
+
+        // DOM Elements
+        const jobRoleSelect = document.getElementById("jobRoleSelect");
+        const experienceLevel = document.getElementById("experienceLevel");
+        const careerPath = document.getElementById("careerPath");
+
+        // Populate career path based on selected job role and experience level
+        jobRoleSelect.addEventListener("change", () => updateCareerPath());
+        experienceLevel.addEventListener("change", () => updateCareerPath());
+
+        function updateCareerPath() {
+            const jobRole = jobRoleSelect.value;
+            const experience = experienceLevel.value;
+            careerPath.innerHTML = ""; // Clear previous steps
+
+            if (jobRole && experience && careerPathMap[jobRole] && careerPathMap[jobRole][experience]) {
+                const steps = careerPathMap[jobRole][experience];
+                const timeline = document.createElement("div");
+                timeline.className = "timeline";
+                steps.forEach((step, index) => {
+                    const stepDiv = document.createElement("div");
+                    stepDiv.className = `step ${index % 2 === 0 ? "left" : "right"}`;
+                    stepDiv.innerHTML = `
+                        <img src="${step.image}" alt="${step.title}">
+                        <div class="step-content">
+                            <h3>${step.title}</h3>
+                            <p>${step.description}</p>
+                        </div>
+                    `;
+                    timeline.appendChild(stepDiv);
+                });
+                careerPath.appendChild(timeline);
+            } else {
+                const noPathDiv = document.createElement("div");
+                noPathDiv.className = "step";
+                noPathDiv.innerHTML = `<p>No path available for the selected job role and experience level.</p>`;
+                careerPath.appendChild(noPathDiv);
+            }
+        }
+
+        // Logout Button
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>

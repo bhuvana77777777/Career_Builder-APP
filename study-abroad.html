@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <body>
+        <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+        <script src="https://files.bpcontent.cloud/2024/12/24/15/20241224153710-GU4UYT3Y.js"></script>
+      </body>
+      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Abroad - Career Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: rgb(170, 124, 210);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        #logoutBtn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #logoutBtn:hover {
+            background: #ff6b81;
+        }
+
+        .abroad-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #countrySelect {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #countrySelect:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        #countrySelect option {
+            background: black;
+            color: white;
+        }
+
+        .details-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .details-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .details-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .details-container h2 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+
+        .details-container p {
+            margin: 10px 0;
+        }
+
+        .details-container ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .details-container ul li {
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .details-container ul li:hover {
+            color: #1e90ff;
+        }
+
+        .details-container p strong {
+            color: #1e90ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Be Confident & Less uncertian!</h1>
+            <button id="logoutBtn" onclick="logout()">Logout</button>
+        </header>
+
+        <div class="abroad-container">
+            <h2>Explore Study Abroad Opportunities</h2>
+            <select id="countrySelect">
+                <option value="">Select a Country</option>
+                <!-- Countries will be dynamically populated here -->
+            </select>
+            <div id="detailsContainer" class="details-container hidden">
+                <img id="countryImage" src="pic/st.png" alt="Country Image">
+                <h2 id="countryName"></h2>
+                <p><strong>List of Universities:</strong></p>
+                <ul id="universities"></ul>
+                <p><strong>Minimum Fee Structure:</strong> <span id="feeStructure"></span></p>
+                <p><strong>Courses Available:</strong> <span id="courses"></span></p>
+                <p><strong>Exams to Qualify/Apply:</strong> <span id="exams"></span></p>
+                <p><strong>Accommodation:</strong> <span id="accommodation"></span></p>
+                <p><strong>Visa Guidance:</strong> <span id="visaGuidance"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase and Local JSON Integration -->
+    <script type="module">
+        // Import the functions you need from the Firebase SDKs
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBBKHpckC_rlxstwFHxAiYhyB5jWWAjQa0",
+  authDomain: "career-7-d302f.firebaseapp.com",
+  projectId: "career-7-d302f",
+  storageBucket: "career-7-d302f.appspot.com",
+  messagingSenderId: "965840519583",
+  appId: "1:965840519583:web:563fcccc5e2069c4467daa",
+  measurementId: "G-ZJ09SK4B28"
+};
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Local JSON Dataset
+        const studyAbroadData = {
+    USA: {
+        image: "pic/us.jpg",
+        universities: ["Harvard University", "Massachusetts Institute of Technology (MIT)", "Stanford University", "California Institute of Technology (Caltech)"],
+        feeStructure: "$20,000 - $50,000 per year",
+        courses: "Computer Science, Business Administration, Engineering, Data Science",
+        exams: "TOEFL, IELTS, GRE, GMAT",
+        accommodation: "On-campus dormitories or off-campus apartments. Cost: $800 - $1,500 per month.",
+        visaGuidance: "F-1 Student Visa required. Prepare financial documents, admission letter, and proof of English proficiency."
+    },
+    Canada: {
+        image: "pic/can.jpg",
+        universities: ["University of Toronto", "McGill University", "University of British Columbia", "University of Alberta"],
+        feeStructure: "CAD 15,000 - CAD 35,000 per year",
+        courses: "Data Science, Healthcare, Environmental Studies, Business",
+        exams: "IELTS, TOEFL, GRE (optional)",
+        accommodation: "On-campus housing or shared apartments. Cost: CAD 600 - CAD 1,200 per month.",
+        visaGuidance: "Study Permit required. Proof of funds, acceptance letter, and medical exam may be needed."
+    },
+    Germany: {
+        image: "pic/ger.jpg",
+        universities: ["Technical University of Munich", "Heidelberg University", "Humboldt University of Berlin", "University of Freiburg"],
+        feeStructure: "No tuition fees (public universities). Semester contribution: €150 - €350.",
+        courses: "Mechanical Engineering, Computer Science, Renewable Energy, Business",
+        exams: "IELTS, TOEFL, TestDaF (for German proficiency)",
+        accommodation: "Student dormitories or shared flats. Cost: €300 - €600 per month.",
+        visaGuidance: "Student Visa required. Proof of financial stability (€11,208 in blocked account) and health insurance."
+    },
+    Australia: {
+        image: "pic/aus.jpg",
+        universities: ["University of Melbourne", "Australian National University", "University of Sydney", "University of Queensland"],
+        feeStructure: "AUD 20,000 - AUD 45,000 per year",
+        courses: "Information Technology, Medicine, Environmental Science, Business",
+        exams: "IELTS, TOEFL, PTE",
+        accommodation: "On-campus housing or rented apartments. Cost: AUD 800 - AUD 1,500 per month.",
+        visaGuidance: "Student Visa (subclass 500) required. Proof of enrollment, financial capacity, and English proficiency."
+    },
+    India: {
+        image: "pic/in.jpeg",
+        universities: ["Indian Institute of Technology (IIT)", "Indian Institute of Science (IISc)", "University of Delhi", "University of Mumbai"],
+        feeStructure: "INR 50,000 - INR 2,00,000 per year",
+        courses: "Engineering, Medicine, Business, Computer Science",
+        exams: "JEE, NEET, CAT, GATE",
+        accommodation: "Hostels or rented apartments. Cost: INR 5,000 - INR 15,000 per month.",
+        visaGuidance: "No visa required for Indian students. Ensure admission and financial documents are ready."
+    },
+    UK: {
+        image: "pic/uk.jpg",
+        universities: ["University of Oxford", "University of Cambridge", "Imperial College London", "London School of Economics"],
+        feeStructure: "£15,000 - £35,000 per year",
+        courses: "Business, Engineering, Medicine, Law",
+        exams: "IELTS, TOEFL, UCAT (for Medicine)",
+        accommodation: "On-campus halls or private rentals. Cost: £600 - £1,200 per month.",
+        visaGuidance: "Tier 4 Student Visa required. Proof of funds, CAS letter, and English proficiency."
+    },
+    France: {
+        image: "pic/fr.jpeg",
+        universities: ["Sorbonne University", "École Polytechnique", "University of Paris", "HEC Paris"],
+        feeStructure: "€200 - €600 per year (public universities). Private universities: €10,000 - €30,000 per year.",
+        courses: "Engineering, Business, Fashion, Culinary Arts",
+        exams: "DELF/DALF (French proficiency), IELTS, TOEFL",
+        accommodation: "Student residences or shared apartments. Cost: €400 - €800 per month.",
+        visaGuidance: "Student Visa required. Proof of financial means (€615 per month) and health insurance."
+    },
+    Japan: {
+        image: "pic/ja.jpg",
+        universities: ["University of Tokyo", "Kyoto University", "Osaka University", "Tokyo Institute of Technology"],
+        feeStructure: "¥500,000 - ¥1,500,000 per year",
+        courses: "Engineering, Computer Science, Business, Japanese Studies",
+        exams: "EJU (Examination for Japanese University Admission), JLPT (Japanese proficiency)",
+        accommodation: "Dormitories or private apartments. Cost: ¥50,000 - ¥100,000 per month.",
+        visaGuidance: "Student Visa required. Proof of admission, financial stability, and health insurance."
+    },
+    SouthKorea: {
+        image: "pic/sk.jpg",
+        universities: ["Seoul National University", "Korea Advanced Institute of Science and Technology (KAIST)", "Yonsei University", "Korea University"],
+        feeStructure: "KRW 3,000,000 - KRW 10,000,000 per year",
+        courses: "Engineering, Business, Korean Studies, Computer Science",
+        exams: "TOPIK (Korean proficiency), IELTS, TOEFL",
+        accommodation: "Dormitories or private housing. Cost: KRW 300,000 - KRW 600,000 per month.",
+        visaGuidance: "D-2 Student Visa required. Proof of admission, financial stability, and health insurance."
+    },
+    NewZealand: {
+        image: "pic/nz.jpg",
+        universities: ["University of Auckland", "University of Otago", "Victoria University of Wellington", "Massey University"],
+        feeStructure: "NZD 20,000 - NZD 40,000 per year",
+        courses: "Environmental Science, Agriculture, Business, IT",
+        exams: "IELTS, TOEFL, PTE",
+        accommodation: "On-campus or off-campus housing. Cost: NZD 800 - NZD 1,500 per month.",
+        visaGuidance: "Student Visa required. Proof of funds, admission, and health insurance."
+    },
+    Singapore: {
+        image: "pic/sing.jpg",
+        universities: ["National University of Singapore (NUS)", "Nanyang Technological University (NTU)", "Singapore Management University (SMU)", "Singapore University of Technology and Design (SUTD)"],
+        feeStructure: "SGD 15,000 - SGD 50,000 per year",
+        courses: "Engineering, Business, Computer Science, Architecture",
+        exams: "IELTS, TOEFL, SAT (for undergraduate programs)",
+        accommodation: "On-campus hostels or private housing. Cost: SGD 600 - SGD 1,500 per month.",
+        visaGuidance: "Student Pass required. Proof of admission, financial stability, and health insurance."
+    },
+    Switzerland: {
+        image: "pic/sw.jpg",
+        universities: ["ETH Zurich", "University of Zurich", "EPFL (École Polytechnique Fédérale de Lausanne)", "University of Geneva"],
+        feeStructure: "CHF 1,000 - CHF 2,000 per year (public universities). Private universities: CHF 20,000 - CHF 40,000 per year.",
+        courses: "Engineering, Business, Hospitality, Computer Science",
+        exams: "IELTS, TOEFL, GRE (optional)",
+        accommodation: "Student housing or shared apartments. Cost: CHF 800 - CHF 1,500 per month.",
+        visaGuidance: "Student Visa required. Proof of financial means (CHF 21,000 per year) and health insurance."
+    },
+    Netherlands: {
+        image: "pic/neth.jpg",
+        universities: ["University of Amsterdam", "Delft University of Technology", "Utrecht University", "Erasmus University Rotterdam"],
+        feeStructure: "€6,000 - €15,000 per year",
+        courses: "Engineering, Business, Social Sciences, Computer Science",
+        exams: "IELTS, TOEFL, GRE (optional)",
+        accommodation: "Student housing or private rentals. Cost: €400 - €800 per month.",
+        visaGuidance: "Student Visa required. Proof of financial means (€11,208 per year) and health insurance."
+    },
+    Sweden: {
+        image: "pic/swe.jpg",
+        universities: ["Karolinska Institute", "Uppsala University", "Lund University", "KTH Royal Institute of Technology"],
+        feeStructure: "SEK 80,000 - SEK 140,000 per year",
+        courses: "Engineering, Medicine, Business, Environmental Science",
+        exams: "IELTS, TOEFL, GRE (optional)",
+        accommodation: "Student housing or private rentals. Cost: SEK 3,000 - SEK 6,000 per month.",
+        visaGuidance: "Student Visa required. Proof of financial means (SEK 8,568 per month) and health insurance."
+    },
+    Italy: {
+        image: "pic/it.jpeg",
+        universities: ["University of Bologna", "Sapienza University of Rome", "University of Milan", "Politecnico di Milano"],
+        feeStructure: "€1,000 - €4,000 per year (public universities). Private universities: €10,000 - €20,000 per year.",
+        courses: "Engineering, Architecture, Fashion, Business",
+        exams: "IELTS, TOEFL, GRE (optional)",
+        accommodation: "Student housing or private rentals. Cost: €300 - €600 per month.",
+        visaGuidance: "Student Visa required. Proof of financial means (€6,000 per year) and health insurance."
+    },
+    Spain: {
+        image: "pic/spain.jpg",
+        universities: ["University of Barcelona", "Autonomous University of Madrid", "University of Valencia", "Complutense University of Madrid"],
+        feeStructure: "€1,000 - €3,000 per year (public universities). Private universities: €10,000 - €20,000 per year.",
+        courses: "Business, Engineering, Tourism, Spanish Studies",
+        exams: "DELE (Spanish proficiency), IELTS, TOEFL",
+        accommodation: "Student housing or private rentals. Cost: €300 - €600 per month.",
+        visaGuidance: "Student Visa required. Proof of financial means (€600 per month) and health insurance."
+    },
+    China: {
+        image: "pic/china.jpeg",
+        universities: ["Tsinghua University", "Peking University", "Fudan University", "Shanghai Jiao Tong University"],
+        feeStructure: "CNY 20,000 - CNY 50,000 per year",
+        courses: "Engineering, Business, Chinese Studies, Computer Science",
+        exams: "HSK (Chinese proficiency), IELTS, TOEFL",
+        accommodation: "Dormitories or private housing. Cost: CNY 1,500 - CNY 3,000 per month.",
+        visaGuidance: "Student Visa (X1/X2) required. Proof of admission, financial stability, and health insurance."
+    },
+    Russia: {
+        image: "pic/rus.jpg",
+        universities: ["Lomonosov Moscow State University", "Saint Petersburg State University", "Novosibirsk State University", "Tomsk State University"],
+        feeStructure: "RUB 150,000 - RUB 400,000 per year",
+        courses: "Engineering, Medicine, Business, Computer Science",
+        exams: "IELTS, TOEFL, TORFL (Russian proficiency)",
+        accommodation: "Dormitories or private housing. Cost: RUB 10,000 - RUB 20,000 per month.",
+        visaGuidance: "Student Visa required. Proof of admission, financial stability, and health insurance."
+    },
+    Brazil: {
+        image: "pic/br.jpg",
+        universities: ["University of São Paulo", "State University of Campinas", "Federal University of Rio de Janeiro", "University of Brasília"],
+        feeStructure: "BRL 10,000 - BRL 30,000 per year",
+        courses: "Engineering, Business, Environmental Science, Medicine",
+        exams: "CELPE-Bras (Portuguese proficiency), IELTS, TOEFL",
+        accommodation: "Student housing or private rentals. Cost: BRL 1,000 - BRL 2,000 per month.",
+        visaGuidance: "Student Visa required. Proof of admission, financial stability, and health insurance."
+    },
+    SouthAfrica: {
+        image: "pic/sa.jpg",
+        universities: ["University of Cape Town", "University of Pretoria", "Stellenbosch University", "University of the Witwatersrand"],
+        feeStructure: "ZAR 40,000 - ZAR 100,000 per year",
+        courses: "Engineering, Business, Medicine, Environmental Science",
+        exams: "IELTS, TOEFL, SAT (for undergraduate programs)",
+        accommodation: "On-campus or off-campus housing. Cost: ZAR 3,000 - ZAR 6,000 per month.",
+        visaGuidance: "Study Visa required. Proof of admission, financial stability, and health insurance."
+    }
+};
+
+        // DOM Elements
+        const countrySelect = document.getElementById("countrySelect");
+        const detailsContainer = document.getElementById("detailsContainer");
+        const countryImage = document.getElementById("countryImage");
+        const countryName = document.getElementById("countryName");
+        const universities = document.getElementById("universities");
+        const feeStructure = document.getElementById("feeStructure");
+        const courses = document.getElementById("courses");
+        const exams = document.getElementById("exams");
+        const accommodation = document.getElementById("accommodation");
+        const visaGuidance = document.getElementById("visaGuidance");
+
+        // Populate country dropdown
+        Object.keys(studyAbroadData).forEach((country) => {
+            const option = document.createElement("option");
+            option.value = country;
+            option.textContent = country;
+            countrySelect.appendChild(option);
+        });
+
+        // Show country details
+        countrySelect.addEventListener("change", (e) => {
+            const country = e.target.value;
+            if (country) {
+                const data = studyAbroadData[country];
+                countryImage.src = data.image;
+                countryName.textContent = country;
+                universities.innerHTML = data.universities.map((uni) => `<li>${uni}</li>`).join("");
+                feeStructure.textContent = data.feeStructure;
+                courses.textContent = data.courses;
+                exams.textContent = data.exams;
+                accommodation.textContent = data.accommodation;
+                visaGuidance.textContent = data.visaGuidance;
+                detailsContainer.classList.remove("hidden");
+            } else {
+                detailsContainer.classList.add("hidden");
+            }
+        });
+
+        // Firebase Auth State Listener
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = "login.html";
+            }
+        });
+
+        // Logout Button
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            });
+        });
+         // Logout Button
+   document.getElementById("logoutBtn").addEventListener("click", () => {
+            window.location.href = "index.html";})
+    </script>
+</body>
+</html>

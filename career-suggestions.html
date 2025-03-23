@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <body>
+        <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+        <script src="https://files.bpcontent.cloud/2024/12/24/15/20241224153710-GU4UYT3Y.js"></script>
+      </body>
+      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Suggestions - Career Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2024/12/24/15/20241224153710-GU4UYT3Y.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Career Suggestions</h1>
+            <button id="logoutBtn" onclick="logout()">Logout</button>
+        </header>
+
+        <div class="skills-input-container">
+            <h2>Enter Your Skills (comma-separated):</h2>
+            <form id="skillsForm">
+                <input type="text" id="skillsInput" placeholder="e.g., programming, design, communication" required>
+                <button type="submit">Get Career Suggestions</button>
+            </form>
+        </div>
+
+        <div class="suggestions-container">
+            <h2>Career Suggestions:</h2>
+            <ul id="careerList">
+                <!-- Career suggestions will be dynamically populated here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Function to map skills to career suggestions
+        function getCareerSuggestions(skills) {
+            const careerMap = {
+    "programming": [
+        {
+            role: "Software Developer",
+            salary: "$80,000 - $120,000",
+            demand: "High",
+            companies: ["Google", "Microsoft", "Amazon"]
+        },
+        {
+            role: "Data Scientist",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Facebook", "IBM", "Apple"]
+        },
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $140,000",
+            demand: "High",
+            companies: ["Netflix", "AWS", "Docker"]
+        },
+        {
+            role: "Machine Learning Engineer",
+            salary: "$100,000 - $150,000",
+            demand: "Very High",
+            companies: ["OpenAI", "Tesla", "NVIDIA"]
+        }
+    ],
+    "design": [
+        {
+            role: "Graphic Designer",
+            salary: "$50,000 - $70,000",
+            demand: "Medium",
+            companies: ["Adobe", "Canva", "Freelance"]
+        },
+        {
+            role: "UI/UX Designer",
+            salary: "$70,000 - $100,000",
+            demand: "High",
+            companies: ["Google", "Apple", "Figma"]
+        },
+        {
+            role: "Motion Graphics Designer",
+            salary: "$60,000 - $90,000",
+            demand: "Medium",
+            companies: ["Pixar", "DreamWorks", "Freelance"]
+        },
+        {
+            role: "Product Designer",
+            salary: "$80,000 - $110,000",
+            demand: "High",
+            companies: ["Airbnb", "Spotify", "Slack"]
+        }
+    ],
+    "communication": [
+        {
+            role: "Marketing Manager",
+            salary: "$60,000 - $90,000",
+            demand: "Medium",
+            companies: ["Procter & Gamble", "Unilever", "Coca-Cola"]
+        },
+        {
+            role: "Public Relations Specialist",
+            salary: "$50,000 - $80,000",
+            demand: "Medium",
+            companies: ["Edelman", "Weber Shandwick", "Ogilvy"]
+        },
+        {
+            role: "Content Strategist",
+            salary: "$55,000 - $85,000",
+            demand: "Medium",
+            companies: ["HubSpot", "Mailchimp", "Freelance"]
+        },
+        {
+            role: "Social Media Manager",
+            salary: "$50,000 - $75,000",
+            demand: "High",
+            companies: ["Meta", "Twitter", "TikTok"]
+        }
+    ],
+    "data analysis": [
+        {
+            role: "Data Analyst",
+            salary: "$60,000 - $90,000",
+            demand: "High",
+            companies: ["Uber", "Lyft", "Spotify"]
+        },
+        {
+            role: "Business Intelligence Analyst",
+            salary: "$70,000 - $100,000",
+            demand: "High",
+            companies: ["Tableau", "Salesforce", "Microsoft"]
+        },
+        {
+            role: "Data Engineer",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Snowflake", "Databricks", "Google"]
+        },
+        {
+            role: "Database Administrator",
+            salary: "$80,000 - $110,000",
+            demand: "Medium",
+            companies: ["Oracle", "IBM", "Amazon"]
+        }
+    ],
+    "cybersecurity": [
+        {
+            role: "Cybersecurity Analyst",
+            salary: "$85,000 - $120,000",
+            demand: "Very High",
+            companies: ["Palo Alto Networks", "Cisco", "FireEye"]
+        },
+        {
+            role: "Ethical Hacker",
+            salary: "$90,000 - $130,000",
+            demand: "High",
+            companies: ["Bugcrowd", "HackerOne", "Freelance"]
+        },
+        {
+            role: "Security Architect",
+            salary: "$100,000 - $150,000",
+            demand: "High",
+            companies: ["IBM", "Microsoft", "Google"]
+        },
+        {
+            role: "Penetration Tester",
+            salary: "$80,000 - $120,000",
+            demand: "High",
+            companies: ["Synack", "CrowdStrike", "Freelance"]
+        }
+    ],
+    "project management": [
+        {
+            role: "Project Manager",
+            salary: "$70,000 - $100,000",
+            demand: "High",
+            companies: ["Accenture", "Deloitte", "Capgemini"]
+        },
+        {
+            role: "Scrum Master",
+            salary: "$75,000 - $110,000",
+            demand: "Medium",
+            companies: ["Jira", "Atlassian", "Freelance"]
+        },
+        {
+            role: "Product Manager",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Google", "Amazon", "Microsoft"]
+        },
+        {
+            role: "Agile Coach",
+            salary: "$85,000 - $120,000",
+            demand: "Medium",
+            companies: ["Spotify", "Netflix", "Freelance"]
+        }
+    ],
+    "writing": [
+        {
+            role: "Technical Writer",
+            salary: "$50,000 - $80,000",
+            demand: "Medium",
+            companies: ["Microsoft", "Google", "GitHub"]
+        },
+        {
+            role: "Content Writer",
+            salary: "$45,000 - $70,000",
+            demand: "Medium",
+            companies: ["HubSpot", "Grammarly", "Freelance"]
+        },
+        {
+            role: "Copywriter",
+            salary: "$55,000 - $85,000",
+            demand: "Medium",
+            companies: ["Ogilvy", "WPP", "Freelance"]
+        },
+        {
+            role: "Editor",
+            salary: "$60,000 - $90,000",
+            demand: "Medium",
+            companies: ["Penguin Random House", "HarperCollins", "Freelance"]
+        }
+    ],
+    "finance": [
+        {
+            role: "Financial Analyst",
+            salary: "$70,000 - $100,000",
+            demand: "High",
+            companies: ["Goldman Sachs", "JPMorgan Chase", "Morgan Stanley"]
+        },
+        {
+            role: "Investment Banker",
+            salary: "$100,000 - $150,000",
+            demand: "High",
+            companies: ["Bank of America", "Citigroup", "Barclays"]
+        },
+        {
+            role: "Accountant",
+            salary: "$60,000 - $90,000",
+            demand: "Medium",
+            companies: ["PwC", "Deloitte", "EY"]
+        },
+        {
+            role: "Risk Manager",
+            salary: "$80,000 - $120,000",
+            demand: "High",
+            companies: ["AIG", "Allianz", "AXA"]
+        }
+    ],
+    "healthcare": [
+        {
+            role: "Nurse",
+            salary: "$60,000 - $90,000",
+            demand: "Very High",
+            companies: ["Mayo Clinic", "Cleveland Clinic", "Kaiser Permanente"]
+        },
+        {
+            role: "Physician",
+            salary: "$150,000 - $300,000",
+            demand: "Very High",
+            companies: ["Johns Hopkins", "Mass General", "Stanford Health"]
+        },
+        {
+            role: "Medical Researcher",
+            salary: "$70,000 - $110,000",
+            demand: "High",
+            companies: ["Pfizer", "Moderna", "Novartis"]
+        },
+        {
+            role: "Pharmacist",
+            salary: "$100,000 - $130,000",
+            demand: "High",
+            companies: ["CVS Health", "Walgreens", "Rite Aid"]
+        }
+    ],
+    "education": [
+        {
+            role: "Teacher",
+            salary: "$40,000 - $70,000",
+            demand: "High",
+            companies: ["Public Schools", "Private Schools", "Tutoring Centers"]
+        },
+        {
+            role: "Professor",
+            salary: "$80,000 - $120,000",
+            demand: "Medium",
+            companies: ["Harvard", "Stanford", "MIT"]
+        },
+        {
+            role: "Instructional Designer",
+            salary: "$60,000 - $90,000",
+            demand: "Medium",
+            companies: ["Coursera", "Udemy", "LinkedIn Learning"]
+        },
+        {
+            role: "Education Consultant",
+            salary: "$70,000 - $100,000",
+            demand: "Medium",
+            companies: ["Pearson", "McGraw-Hill", "Freelance"]
+        }
+    ],
+    "python": [
+        {
+            role: "Python Developer",
+            salary: "$80,000 - $120,000",
+            demand: "Very High",
+            companies: ["Google", "Facebook", "Netflix"]
+        },
+        {
+            role: "Data Scientist",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["IBM", "Apple", "OpenAI"]
+        },
+        {
+            role: "Machine Learning Engineer",
+            salary: "$100,000 - $150,000",
+            demand: "Very High",
+            companies: ["Tesla", "NVIDIA", "DeepMind"]
+        }
+    ],
+    "java": [
+        {
+            role: "Java Developer",
+            salary: "$85,000 - $125,000",
+            demand: "High",
+            companies: ["Amazon", "Oracle", "Uber"]
+        },
+        {
+            role: "Android Developer",
+            salary: "$80,000 - $120,000",
+            demand: "High",
+            companies: ["Google", "Samsung", "Freelance"]
+        },
+        {
+            role: "Backend Developer",
+            salary: "$90,000 - $130,000",
+            demand: "High",
+            companies: ["LinkedIn", "Spotify", "Twitter"]
+        }
+    ],
+    "sql": [
+        {
+            role: "Database Administrator",
+            salary: "$80,000 - $110,000",
+            demand: "High",
+            companies: ["Oracle", "Microsoft", "Amazon"]
+        },
+        {
+            role: "Data Analyst",
+            salary: "$70,000 - $100,000",
+            demand: "High",
+            companies: ["Uber", "Lyft", "Spotify"]
+        },
+        {
+            role: "Business Intelligence Analyst",
+            salary: "$75,000 - $110,000",
+            demand: "High",
+            companies: ["Tableau", "Salesforce", "Microsoft"]
+        }
+    ],
+    "javascript": [
+        {
+            role: "Frontend Developer",
+            salary: "$80,000 - $120,000",
+            demand: "Very High",
+            companies: ["Google", "Facebook", "Airbnb"]
+        },
+        {
+            role: "Full Stack Developer",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Slack"]
+        },
+        {
+            role: "Node.js Developer",
+            salary: "$85,000 - $125,000",
+            demand: "High",
+            companies: ["PayPal", "LinkedIn", "Freelance"]
+        }
+    ],
+    "c++": [
+        {
+            role: "Game Developer",
+            salary: "$70,000 - $110,000",
+            demand: "High",
+            companies: ["Ubisoft", "EA Sports", "Blizzard"]
+        },
+        {
+            role: "Systems Programmer",
+            salary: "$90,000 - $130,000",
+            demand: "Medium",
+            companies: ["Microsoft", "IBM", "Intel"]
+        },
+        {
+            role: "Embedded Systems Engineer",
+            salary: "$85,000 - $120,000",
+            demand: "High",
+            companies: ["Tesla", "Boeing", "Lockheed Martin"]
+        }
+    ],
+    "cloud computing": [
+        {
+            role: "Cloud Engineer",
+            salary: "$100,000 - $140,000",
+            demand: "Very High",
+            companies: ["AWS", "Google Cloud", "Microsoft Azure"]
+        },
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Docker"]
+        },
+        {
+            role: "Solutions Architect",
+            salary: "$110,000 - $150,000",
+            demand: "High",
+            companies: ["AWS", "Google Cloud", "IBM"]
+        }
+    ],
+    "artificial intelligence": [
+        {
+            role: "AI Engineer",
+            salary: "$100,000 - $150,000",
+            demand: "Very High",
+            companies: ["OpenAI", "DeepMind", "Tesla"]
+        },
+        {
+            role: "Machine Learning Engineer",
+            salary: "$95,000 - $140,000",
+            demand: "Very High",
+            companies: ["Google", "Facebook", "Apple"]
+        },
+        {
+            role: "Computer Vision Engineer",
+            salary: "$90,000 - $130,000",
+            demand: "High",
+            companies: ["NVIDIA", "Tesla", "OpenCV"]
+        }
+    ],
+    "data science": [
+        {
+            role: "Data Scientist",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Facebook", "IBM", "Apple"]
+        },
+        {
+            role: "Data Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Snowflake", "Databricks", "Google"]
+        },
+        {
+            role: "Business Analyst",
+            salary: "$70,000 - $100,000",
+            demand: "High",
+            companies: ["McKinsey", "BCG", "Deloitte"]
+        }
+    ],
+    "cybersecurity": [
+        {
+            role: "Cybersecurity Analyst",
+            salary: "$85,000 - $120,000",
+            demand: "Very High",
+            companies: ["Palo Alto Networks", "Cisco", "FireEye"]
+        },
+        {
+            role: "Ethical Hacker",
+            salary: "$90,000 - $130,000",
+            demand: "High",
+            companies: ["Bugcrowd", "HackerOne", "Freelance"]
+        },
+        {
+            role: "Security Architect",
+            salary: "$100,000 - $150,000",
+            demand: "High",
+            companies: ["IBM", "Microsoft", "Google"]
+        }
+    ],
+    "docker": [
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Docker"]
+        },
+        {
+            role: "Cloud Engineer",
+            salary: "$100,000 - $140,000",
+            demand: "Very High",
+            companies: ["AWS", "Google Cloud", "Microsoft Azure"]
+        },
+        {
+            role: "Site Reliability Engineer (SRE)",
+            salary: "$105,000 - $145,000",
+            demand: "High",
+            companies: ["Google", "LinkedIn", "Uber"]
+        }
+    ],
+    "kubernetes": [
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Docker"]
+        },
+        {
+            role: "Cloud Architect",
+            salary: "$110,000 - $150,000",
+            demand: "High",
+            companies: ["AWS", "Google Cloud", "IBM"]
+        },
+        {
+            role: "Platform Engineer",
+            salary: "$100,000 - $140,000",
+            demand: "High",
+            companies: ["Microsoft", "Red Hat", "Freelance"]
+        }
+    ],
+    "react": [
+        {
+            role: "Frontend Developer",
+            salary: "$80,000 - $120,000",
+            demand: "Very High",
+            companies: ["Facebook", "Airbnb", "Netflix"]
+        },
+        {
+            role: "UI Developer",
+            salary: "$85,000 - $125,000",
+            demand: "High",
+            companies: ["Google", "Spotify", "Slack"]
+        },
+        {
+            role: "Full Stack Developer",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Slack"]
+        }
+    ],
+    "angular": [
+        {
+            role: "Frontend Developer",
+            salary: "$80,000 - $120,000",
+            demand: "High",
+            companies: ["Google", "Microsoft", "Freelance"]
+        },
+        {
+            role: "UI Developer",
+            salary: "$85,000 - $125,000",
+            demand: "High",
+            companies: ["Adobe", "Slack", "Freelance"]
+        },
+        {
+            role: "Full Stack Developer",
+            salary: "$90,000 - $130,000",
+            demand: "High",
+            companies: ["Microsoft", "Google", "Freelance"]
+        }
+    ],
+    "node.js": [
+        {
+            role: "Backend Developer",
+            salary: "$90,000 - $130,000",
+            demand: "High",
+            companies: ["PayPal", "LinkedIn", "Netflix"]
+        },
+        {
+            role: "Full Stack Developer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Slack"]
+        },
+        {
+            role: "API Developer",
+            salary: "$85,000 - $125,000",
+            demand: "High",
+            companies: ["Stripe", "Twilio", "Freelance"]
+        }
+    ],
+    "typescript": [
+        {
+            role: "Frontend Developer",
+            salary: "$85,000 - $125,000",
+            demand: "High",
+            companies: ["Google", "Microsoft", "Airbnb"]
+        },
+        {
+            role: "Full Stack Developer",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Slack"]
+        },
+        {
+            role: "UI Developer",
+            salary: "$80,000 - $120,000",
+            demand: "High",
+            companies: ["Adobe", "Slack", "Freelance"]
+        }
+    ],
+    "aws": [
+        {
+            role: "Cloud Engineer",
+            salary: "$100,000 - $140,000",
+            demand: "Very High",
+            companies: ["AWS", "Google Cloud", "Microsoft Azure"]
+        },
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Docker"]
+        },
+        {
+            role: "Solutions Architect",
+            salary: "$110,000 - $150,000",
+            demand: "High",
+            companies: ["AWS", "Google Cloud", "IBM"]
+        }
+    ],
+    "azure": [
+        {
+            role: "Cloud Engineer",
+            salary: "$100,000 - $140,000",
+            demand: "Very High",
+            companies: ["Microsoft Azure", "AWS", "Google Cloud"]
+        },
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Microsoft", "Netflix", "Spotify"]
+        },
+        {
+            role: "Solutions Architect",
+            salary: "$110,000 - $150,000",
+            demand: "High",
+            companies: ["Microsoft Azure", "AWS", "IBM"]
+        }
+    ],
+    "git": [
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["GitHub", "GitLab", "Freelance"]
+        },
+        {
+            role: "Software Engineer",
+            salary: "$90,000 - $130,000",
+            demand: "Very High",
+            companies: ["Google", "Microsoft", "Amazon"]
+        },
+        {
+            role: "Version Control Specialist",
+            salary: "$80,000 - $110,000",
+            demand: "Medium",
+            companies: ["GitHub", "GitLab", "Freelance"]
+        }
+    ],
+    "linux": [
+        {
+            role: "Linux System Administrator",
+            salary: "$80,000 - $120,000",
+            demand: "High",
+            companies: ["Red Hat", "IBM", "Canonical"]
+        },
+        {
+            role: "DevOps Engineer",
+            salary: "$95,000 - $135,000",
+            demand: "Very High",
+            companies: ["Netflix", "Spotify", "Docker"]
+        },
+        {
+            role: "Cloud Engineer",
+            salary: "$100,000 - $140,000",
+            demand: "Very High",
+            companies: ["AWS", "Google Cloud", "Microsoft Azure"]
+        }
+    ]
+
+};
+
+
+const careers = [];
+        const addedRoles = new Set(); // To avoid duplicate roles
+
+        skills.forEach((skill) => {
+            const skillKey = skill.trim().toLowerCase();
+            if (careerMap[skillKey]) {
+                careerMap[skillKey].forEach((career) => {
+                    if (!addedRoles.has(career.role)) { // Check if the role is already added
+                        careers.push(career); // Add the career suggestion
+                        addedRoles.add(career.role); // Mark the role as added
+                    }
+                });
+            }
+        });
+
+        return careers;
+    }
+
+    // Handle form submission
+    document.getElementById("skillsForm").addEventListener("submit", (event) => {
+        event.preventDefault(); // Prevent form from submitting
+
+        // Get user input
+        const skillsInput = document.getElementById("skillsInput").value;
+        const skills = skillsInput.split(","); // Split input into an array of skills
+
+        // Clear previous suggestions
+        const careerList = document.getElementById("careerList");
+        careerList.innerHTML = "";
+
+        // Get career suggestions based on skills
+        const careers = getCareerSuggestions(skills);
+
+        // Display career suggestions
+        if (careers.length > 0) {
+            careers.forEach((career) => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <h3>${career.role}</h3>
+                    <p><strong>Expected Salary:</strong> ${career.salary}</p>
+                    <p><strong>Demand:</strong> ${career.demand}</p>
+                    <p><strong>Companies Hiring:</strong> ${career.companies.join(", ")}</p>
+                `;
+                careerList.appendChild(li);
+            });
+        } else {
+            careerList.innerHTML = "<li>No career suggestions found for the entered skills.</li>";
+        }
+        
+    });
+
+        
+
+ 
+   // Logout Button
+   document.getElementById("logoutBtn").addEventListener("click", () => {
+            window.location.href = "index.html";})
+         
+    </script>
+
+
+        
+
+</body>
+</html>
